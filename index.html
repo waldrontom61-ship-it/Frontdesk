@@ -116,6 +116,42 @@
     #announcement-container .announcement-slide .card-subtitle { font-size: 0.75rem; }
     #announcement-container .announcement-slide .card-meta { font-size: 0.65rem; }
   </style>
+
+<style id="tv-desktop-typography">
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    background: #fff;
+  }
+  :root{
+    --base: clamp(18px, 1.2vw + 12px, 30px);
+    --h1: clamp(34px, 2.6vw + 14px, 56px);
+    --h2: clamp(28px, 2.1vw + 12px, 48px);
+    --h3: clamp(24px, 1.6vw + 10px, 40px);
+    --h4: clamp(20px, 1.2vw + 8px, 34px);
+    --mono: 0.95em;
+  }
+  body { font-size: var(--base); line-height: 1.25; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  h1 { font-size: var(--h1); line-height: 1.05; margin: 0.2em 0; }
+  h2 { font-size: var(--h2); line-height: 1.08; margin: 0.25em 0; }
+  h3 { font-size: var(--h3); line-height: 1.1;  margin: 0.3em 0; }
+  h4, h5, h6 { font-size: var(--h4); line-height: 1.15; margin: 0.35em 0; }
+  main, .container, .dashboard, .admin, .content, body > div { max-height: 100vh; box-sizing: border-box; padding-bottom: 0.01px; }
+  .scroll-area, main { overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  th, td { padding: 0.35em 0.6em; vertical-align: middle; overflow-wrap: anywhere; white-space: normal; border-bottom: 1px solid #e6e6e6; }
+  th { font-weight: 700; }
+  input, select, textarea, button, label { font: inherit; line-height: 1.2; }
+  input, select, textarea, button { padding: 0.4em 0.6em; min-height: 2.2em; border-radius: 6px; border: 1px solid #ccc; }
+  button { cursor: pointer; }
+  .badge, .tag, .status { display: inline-block; padding: 0.2em 0.5em; border-radius: 999px; font-weight: 700; line-height: 1; white-space: nowrap; }
+  .header, header { display: flex; align-items: center; gap: 0.6em; flex-wrap: wrap; }
+  @media (min-width: 1280px) { :root { --base: clamp(20px, 1.1vw + 14px, 32px); } }
+  @media (min-width: 1920px) { :root { --base: clamp(22px, 0.95vw + 16px, 34px); --h1: clamp(40px, 2.2vw + 16px, 64px); --h2: clamp(32px, 1.8vw + 14px, 54px); --h3: clamp(26px, 1.4vw + 12px, 44px); --h4: clamp(22px, 1.1vw + 10px, 38px); } }
+  @media (max-width: 900px) { html, body { overflow: auto; } }
+</style>
+
 </head>
 <body>
   <!-- Admin Toggle -->
