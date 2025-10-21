@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Frontdesk</title>
+  <title>YMCA Dashboard with Admin Panel</title>
   <style>
     /* --- Your original CSS (consolidated, unchanged in look) --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -74,6 +74,7 @@
     .btn-primary { background: linear-gradient(135deg,#dc2626,#b91c1c); color:white; border:2px solid #dc2626; box-shadow: 0 4px 12px rgba(220,38,38,0.3); }
     .btn-secondary { background: linear-gradient(135deg,#475569,#334155); color:white; border:2px solid #475569; box-shadow: 0 4px 12px rgba(71,85,105,0.3); }
     .btn-danger { background: linear-gradient(135deg,#ef4444,#dc2626); color:white; border:2px solid #ef4444; box-shadow: 0 4px 12px rgba(239,68,68,0.3); }
+
     .data-table { width:100%; border-collapse:collapse; margin-top:1.5rem; background:#1e293b; border-radius:1rem; overflow:hidden; border:2px solid #334155; box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
     .data-table th, .data-table td { padding:1.25rem 1rem; text-align:left; border-bottom:1px solid #334155; font-weight:500; }
     .data-table th { background: linear-gradient(135deg,#dc2626,#b91c1c); font-weight:700; color:white; font-size:1rem; letter-spacing:0.025em; text-transform:uppercase; }
@@ -116,6 +117,93 @@
     #announcement-container .announcement-slide .card-subtitle { font-size: 0.75rem; }
     #announcement-container .announcement-slide .card-meta { font-size: 0.65rem; }
   </style>
+
+<style>
+/* Make layout responsive */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent scrolling */
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+}
+header, section {
+    width: 95%;
+    box-sizing: border-box;
+}
+/* Responsive text scaling */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+    section h2 {
+        font-size: 1.2em;
+    }
+}
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.2em;
+    }
+    section h2 {
+        font-size: 1em;
+    }
+}
+/* Increase size of classes and announcements */
+#classes, #announcements {
+    font-size: 1.2em;
+    padding: 20px;
+}
+#classes table, #announcements table {
+    width: 100%;
+    font-size: 1.1em;
+}
+/* Ensure no scrollbars */
+html, body {
+    height: 100%;
+}
+</style>
+
+
+<style>
+/* Optimize for large TV screens */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent scrolling */
+    font-size: 2em; /* Base font size for TV */
+}
+header h1 {
+    font-size: 3em;
+}
+section h2 {
+    font-size: 2.5em;
+}
+#classes, #announcements {
+    font-size: 2em;
+    padding: 40px; /* Increase padding for visibility */
+}
+#classes table, #announcements table {
+    width: 100%;
+    font-size: 1.8em;
+}
+input, select, button, textarea {
+    font-size: 1.5em;
+    padding: 15px;
+}
+/* Ensure layout scales well on large screens */
+.container {
+    max-width: 95%;
+    margin: auto;
+}
+</style>
+
 </head>
 <body>
   <!-- Admin Toggle -->
@@ -292,7 +380,7 @@
       </div>
       <div class="form-group">
         <label class="form-label">JSON path (in repo)</label>
-        <input type="text" class="form-input" id="ghPath" placeholder="dashboard-data.json" value="welcometv.json">
+        <input type="text" class="form-input" id="ghPath" placeholder="dashboard-data.json" value="dashboard-data.json">
       </div>
       <div class="form-group">
         <label class="form-label">Personal Access Token (fine‑grained)</label>
@@ -324,7 +412,7 @@
      ******************************************************************/
 
     // ---------- CONFIG ----------
-    const JSON_URL = './welcometv.json';
+    const JSON_URL = './dashboard-data.json';
 
     let dashboardData = {
       version: null, // track JSON version
@@ -406,6 +494,7 @@
       const fromSchedule = getTodaysClasses(); // today's schedule (tagged fromSchedule: true)
       const fromJsonManual = Array.isArray(dashboardData.classes) ? dashboardData.classes : []; // manual classes from JSON
       let fromLocalManual = [];
+
       if (saved) {
         try {
           const parsed = JSON.parse(saved);
@@ -589,6 +678,7 @@
           '<div class="info-card good-announcement"><div class="card-title">Welcome to YMCA!</div><div class="card-subtitle">Have a great workout today</div></div>';
         return;
       }
+
       ann.forEach((a, idx) => {
         const div = document.createElement('div');
         const severity = a.severity || 'good';
@@ -870,7 +960,7 @@
     const GH_DEFAULT_OWNER  = 'waldrontom61';
     const GH_DEFAULT_REPO   = 'dashboard1';
     const GH_DEFAULT_BRANCH = 'main';
-    const GH_DEFAULT_PATH   = 'welcometv.json';
+    const GH_DEFAULT_PATH   = 'dashboard-data.json';
 
     /* ---------- Modal UI ---------- */
     function openGitHubSettings() {
@@ -888,7 +978,7 @@
       localStorage.setItem('ghOwner',  document.getElementById('ghOwner').value.trim());
       localStorage.setItem('ghRepo',   document.getElementById('ghRepo').value.trim());
       localStorage.setItem('ghBranch', document.getElementById('ghBranch').value.trim() || 'main');
-      localStorage.setItem('ghPath',   document.getElementById('ghPath').value.trim() || 'welcometv.json');
+      localStorage.setItem('ghPath',   document.getElementById('ghPath').value.trim() || 'dashboard-data.json');
 
       const tok = document.getElementById('ghToken').value.trim();
       const remember = document.getElementById('rememberToken').checked;
